@@ -8,4 +8,11 @@ export type AuthFormState = {
         avatar_url?: string[];
         _form?: string[];
     } 
-}
+};
+
+export type Profile = {
+    id?: string;
+    name?: string;
+    avatar_url?: string;
+    role?: string;
+} 
