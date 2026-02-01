@@ -13,7 +13,7 @@ import { Form } from "@/components/ui/form";
 import {
   INITIAL_LOGIN_FORM,
   INITIAL_STATE_LOGIN_FORM,
-} from "@/constants/auth.constant";
+} from "@/constants/auth-constant";
 import { LoginForm, loginSchemaForm } from "@/validations/auth-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useActionState, useEffect } from "react";
@@ -44,14 +44,14 @@ export default function Login() {
   });
 
   useEffect(() => {
-if(loginState?.status === "error") {
-  toast.error("Login Failed", {
-    description: loginState.errors._form?.[0],
-  })
-  startTransition(() => {
-    loginAction(null)
-  })
-}
+    if (loginState?.status === "error") {
+      toast.error("Login Failed", {
+        description: loginState.errors._form?.[0],
+      });
+      startTransition(() => {
+        loginAction(null);
+      });
+    }
   }, [loginState]);
 
   console.log(loginState);
@@ -84,7 +84,9 @@ if(loginState?.status === "error") {
               placeholder="*****"
             />
 
-            <Button type="submit">{isPendingLogin ? <Loader2 className="animated-spin"/> : "Login"}</Button>
+            <Button type="submit">
+              {isPendingLogin ? <Loader2 className="animated-spin" /> : "Login"}
+            </Button>
           </form>
         </Form>
       </CardContent>

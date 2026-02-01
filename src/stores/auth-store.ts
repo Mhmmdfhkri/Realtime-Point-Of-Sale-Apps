@@ -1,7 +1,7 @@
 import { User } from "@supabase/supabase-js";
 import { create } from "zustand";
 import { Profile } from "@/types/auth";
-import { INITIAL_STATE_PROFILE } from "@/constants/auth.constant";
+import { INITIAL_STATE_PROFILE } from "@/constants/auth-constant";
 
 type AuthState = {
   user: User | null;
@@ -11,8 +11,8 @@ type AuthState = {
 };
 
 export const userAuthStore = create<AuthState>((set) => ({
-    user: null,
-    profile: INITIAL_STATE_PROFILE,
-    setUser: (user) => set({user}),
-    setProfile: (profile) => set({profile}) 
+  user: null,
+  profile: INITIAL_STATE_PROFILE,
+  setUser: (user) => set({ user }),
+  setProfile: (profile) => set({ profile }),
 }));
