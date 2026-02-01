@@ -8,7 +8,7 @@ export const INITIAL_STATE_LOGIN_FORM = {
   errors: {
     email: [],
     password: [],
-    _form: []
+    _form: [],
   },
 };
 
@@ -16,16 +16,16 @@ export const INITIAL_STATE_PROFILE = {
   id: "",
   name: "",
   role: "",
-  avatar_url: ""
-}
+  avatar_url: "",
+};
 
 export const INITIAL_CREATE_USER = {
   name: "",
   role: "",
   avatar_url: "",
   email: "",
-  password: ""
-}
+  password: "",
+};
 
 export const INITIAL_STATE_CREATE_USER = {
   status: "idle",
@@ -35,6 +35,21 @@ export const INITIAL_STATE_CREATE_USER = {
     name: [],
     role: [],
     avatar_url: [],
-    _form: []
+    _form: [],
   },
 };
+
+export const ROLES_LIST = [
+  {
+    value: "admin",
+    label: "Admin",
+  },
+  {
+    value: "kitchen",
+    label: "Kitchen",
+  },
+  {
+    value: "cashier",
+    label: "Cashier",
+  },
+];
