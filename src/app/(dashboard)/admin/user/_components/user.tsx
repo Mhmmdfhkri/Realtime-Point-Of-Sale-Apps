@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import DialogCreateUser from "./dialog-create-user";
 import { Profile } from "@/types/auth";
 import DialogUpdateUser from "./dialog-update-user";
+import DialogDeleteUser from "./dialog-delete-user";
 
 export default function UserManagement() {
   const supabase = createClient();
@@ -26,7 +27,11 @@ export default function UserManagement() {
     handleChangeLimit,
     handleChangeSearch,
   } = useDataTable();
-  const { data: users, isLoading, refetch } = useQuery({
+  const {
+    data: users,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["users", currentPage, currentLimit, currentSearch],
     queryFn: async () => {
       const result = await supabase
@@ -51,19 +56,19 @@ export default function UserManagement() {
     },
   });
 
-   const [selectedAction, setSelectedAction] = useState<{
-    data: Profile,
+  const [selectedAction, setSelectedAction] = useState<{
+    data: Profile;
     type: "update" | "delete";
-  } | null >(null);
+  } | null>(null);
 
-    const handleChangeAction = (open: boolean) => {
-    if(!open) setSelectedAction(null);
-  }
+  const handleChangeAction = (open: boolean) => {
+    if (!open) setSelectedAction(null);
+  };
 
   const filteredData = useMemo(() => {
     return (users?.data || []).map((user, index) => {
       return [
-        index + 1,
+        currentLimit * (currentPage - 1) + index + 1,
         user.id,
         user.name,
         user.role,
@@ -80,7 +85,7 @@ export default function UserManagement() {
                 setSelectedAction({
                   data: user,
                   type: "update",
-                })
+                });
               },
             },
             {
@@ -91,7 +96,12 @@ export default function UserManagement() {
                 </span>
               ),
               variant: "destructive",
-              action: () => {},
+              action: () => {
+                setSelectedAction({
+                  data: user,
+                  type: "delete",
+                });
+              },
             },
           ]}
         />,
@@ -132,10 +142,19 @@ export default function UserManagement() {
         onChangePage={handleChangePage}
         onChangeLimit={handleChangeLimit}
       />
-      <DialogUpdateUser open={selectedAction !== null && selectedAction.type === "update"}
-      refetch={refetch}
-      currentData={selectedAction?.data}
-      handleChangeAction={handleChangeAction} />
+      <DialogUpdateUser
+        open={selectedAction !== null && selectedAction.type === "update"}
+        refetch={refetch}
+        currentData={selectedAction?.data}
+        handleChangeAction={handleChangeAction}
+      />
+
+      <DialogDeleteUser
+        open={selectedAction !== null && selectedAction.type === "delete"}
+        refetch={refetch}
+        currentData={selectedAction?.data}
+        handleChangeAction={handleChangeAction}
+      />
     </div>
   );
 }
