@@ -1,8 +1,3 @@
-import { INITIAL_STATE_UPDATE_USER } from "@/constants/auth-constant";
-import {
-  UpdateUserForm,
-  updateUserSchema,
-} from "@/validations/auth-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useActionState, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +5,6 @@ import { updateMenu } from "../actions";
 import { toast } from "sonner";
 import { Preview } from "@/types/general";
 import FormMenu from "./form-menu";
-import { Profile } from "@/types/auth";
 import { Dialog } from "@radix-ui/react-dialog";
 import { Menu, MenuForm, menuFormSchema } from "@/validations/menu-validation";
 import { INITIAL_STATE_MENU } from "@/constants/menu-constant";
