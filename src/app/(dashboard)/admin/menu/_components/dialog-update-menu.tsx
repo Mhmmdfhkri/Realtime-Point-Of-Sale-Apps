@@ -53,13 +53,13 @@ export default function DialogUpdateMenu({
 
   useEffect(() => {
     if (updateMenuState?.status === "error") {
-      toast.error("Update User Failed", {
+      toast.error("Update Menu Failed", {
         description: updateMenuState.errors?._form?.[0],
       });
     }
 
     if (updateMenuState?.status === "success") {
-      toast.success("Update User Success");
+      toast.success("Update Menu Success");
       form.reset();
       handleChangeAction?.(false);
       refetch();
