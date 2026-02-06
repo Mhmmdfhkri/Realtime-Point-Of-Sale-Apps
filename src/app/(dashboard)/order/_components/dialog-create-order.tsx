@@ -23,6 +23,7 @@ import FormInput from "@/components/common/form-input";
 import FormSelect from "@/components/common/form-select";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function DialogCreateOrder({
   refetch,
@@ -90,7 +91,6 @@ export default function DialogCreateOrder({
                 disabled: table.status !== 'available',
               }))}
             />
-
             <FormSelect
               form={form}
               name="status"
