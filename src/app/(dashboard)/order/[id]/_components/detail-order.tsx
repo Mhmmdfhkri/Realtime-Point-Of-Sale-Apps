@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 import { toast } from "sonner";
+import Summary from "./summary";
 
 export default function DetailOrder({ id }: { id: string }) {
   const supabase = createClient();
@@ -74,16 +75,13 @@ export default function DetailOrder({ id }: { id: string }) {
             </span>
           </div>
         </div>,
-        <div>
-          {convertIDR(item.menus.price * item.quantity)}
-        </div>,
+        <div>{convertIDR(item.menus.price * item.quantity)}</div>,
         <div
           className={cn("px-2 py-1 rounded-full text-white w-fit capitalize", {
             "bg-gray-500": item.status === "pending",
             "bg-yellow-500": item.status === "process",
             "bg-blue-500": item.status === "ready",
             "bg-green-500": item.status === "serve",
-            
           })}
         >
           {item.status}
@@ -119,6 +117,10 @@ export default function DetailOrder({ id }: { id: string }) {
             onChangePage={handleChangePage}
             onChangeLimit={handleChangeLimit}
           />
+        </div>
+
+        <div className="lg:w-1\3">
+          {order && <Summary order={order} orderMenu={orderMenu?.data} id={id} />}
         </div>
       </div>
     </div>
