@@ -2,7 +2,7 @@ import Login from "./_components/login";
 
 
 export const metadata = {
-    title: "Fikri Cafe | Login",
+    title: "THEIRO Cafe | Login",
 };
 
 

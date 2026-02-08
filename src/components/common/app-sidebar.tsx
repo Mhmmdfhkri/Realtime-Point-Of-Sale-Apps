@@ -47,7 +47,7 @@ export default function AppSidebar() {
                 <div className="bg-teal-500 flex p-2 items-center justify-center rounded-md">
                   <Coffee className="size-4" />
                 </div>
-                Fikri Cafee
+                THEIRO Cafee
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -93,7 +93,7 @@ export default function AppSidebar() {
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={profile.avatar_url} alt={profile.name} />
                     <AvatarFallback className="rounded-lg">
-                        {profile.name?.charAt(0)}
+                      {profile.name?.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="leading-tight">
@@ -114,8 +114,13 @@ export default function AppSidebar() {
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5">
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage src={profile.avatar_url} alt={profile.name} />
-                      <AvatarFallback className="rounded-lg">{profile.name?.charAt(0)}</AvatarFallback>
+                      <AvatarImage
+                        src={profile.avatar_url}
+                        alt={profile.name}
+                      />
+                      <AvatarFallback className="rounded-lg">
+                        {profile.name?.charAt(0)}
+                      </AvatarFallback>
                     </Avatar>
                     <div className="leading-tight">
                       <h4 className="truncate font-medium">{profile.name}</h4>

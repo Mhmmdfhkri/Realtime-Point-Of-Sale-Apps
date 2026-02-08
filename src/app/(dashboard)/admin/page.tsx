@@ -1,9 +1,9 @@
 import Dashboard from "./_components/dashboard";
 
 export const metadata = {
-    title: 'Fikri Cafe | Dashboard',
-} 
+  title: "THEIRO Cafe | Dashboard",
+};
 
-export default function DashboardPage(){
-    return <Dashboard />
+export default function DashboardPage() {
+  return <Dashboard />;
 }

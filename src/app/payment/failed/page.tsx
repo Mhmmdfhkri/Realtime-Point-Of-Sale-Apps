@@ -1,9 +1,9 @@
 import FailedManagement from "./_components/failed";
 
 export const metadata = {
-    title: 'Fikri Cafe | Payment Failed',
-} 
+  title: "THEIRO Cafe | Payment Failed",
+};
 
-export default function FailedManagementPage(){
-    return <FailedManagement />
+export default function FailedManagementPage() {
+  return <FailedManagement />;
 }

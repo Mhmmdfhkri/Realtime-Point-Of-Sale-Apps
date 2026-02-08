@@ -1,9 +1,9 @@
 import UserManagement from "./_components/user";
 
 export const metadata = {
-    title: 'Fikri Cafe | User Management',
-} 
+  title: "THEIRO Cafe | User Management",
+};
 
-export default function UserManagementPage(){
-    return <UserManagement />
+export default function UserManagementPage() {
+  return <UserManagement />;
 }

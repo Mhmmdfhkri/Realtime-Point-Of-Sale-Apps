@@ -3,13 +3,13 @@ import DetailOrder from "./_components/detail-order";
 import { environment } from "@/configs/environment";
 
 export const metadata = {
-  title: "Fikri Cafe | Detail Order",
+  title: "THEIRO Cafe | Detail Order",
 };
 
 declare global {
-    interface Window {
-        snap: any;
-    }
+  interface Window {
+    snap: any;
+  }
 }
 
 export default async function DetailOrderPage({

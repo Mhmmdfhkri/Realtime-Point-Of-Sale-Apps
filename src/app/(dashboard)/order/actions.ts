@@ -30,7 +30,7 @@ export async function createOrder(
 
   const supabase = await createClient();
 
-  const orderId = `FIKRICAFE-${Date.now()}`;
+  const orderId = `THEIROCAFE-${Date.now()}`;
 
   const [orderResult, tableResult] = await Promise.all([
     supabase.from("orders").insert({
@@ -168,9 +168,6 @@ export async function updateStatusOrderItem(
   };
 }
 
-
-
-
 export async function generatePayment(
   prevState: FormState,
   formData: FormData,
@@ -215,13 +212,10 @@ export async function generatePayment(
     .update({ payment_token: result.token })
     .eq("order_id", orderId);
 
-
-    return {
-      status: "success",
-      data: {
-        payment_token: `${result.token}`,
-      }
-    }
+  return {
+    status: "success",
+    data: {
+      payment_token: `${result.token}`,
+    },
+  };
 }
-
-
