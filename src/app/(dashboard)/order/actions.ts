@@ -113,7 +113,6 @@ export async function updateReservation(
   };
 }
 
-
 export async function addOrderItem(
   prevState: OrderFormState,
   data: {
@@ -123,21 +122,44 @@ export async function addOrderItem(
 ) {
   const supabase = await createClient();
 
-  const payload = data.items.map(({total, menu, ...item}) => item);
+  const payload = data.items.map(({ total, menu, ...item }) => item);
 
-  const {error} = await supabase.from("orders_menus").insert(payload);
-  if(error) {
+  const { error } = await supabase.from("orders_menus").insert(payload);
+  if (error) {
     return {
       status: "error",
       errors: {
         ...prevState,
         _form: [],
       },
-    }
+    };
   }
 
   redirect(`/order/${data.order_id}`);
 }
 
+export async function updateStatusOrderItem(
+  prevState: FormState,
+  formData: FormData,
+) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("orders_menus").update({
+    status: formData.get("status"),
+  }).eq("id", formData.get("id"));
 
 
+  if(error){
+    return {
+      status: "error",
+      errors: {
+        ...prevState,
+        _form: [error.message],
+      },
+    };
+  }
+
+  return {
+    status: "success"
+  }
+}
