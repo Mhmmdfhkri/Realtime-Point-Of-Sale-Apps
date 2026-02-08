@@ -28,6 +28,7 @@ import { updateReservation } from "../actions";
 import { INITIAL_STATE_ACTION } from "@/constants/general-constant";
 import { Ban, Link2Icon, ScrollText } from "lucide-react";
 import Link from "next/link";
+import { useAuthStore } from "@/stores/auth-store";
 
 export default function OrderManagement() {
   const supabase = createClient();
@@ -39,6 +40,8 @@ export default function OrderManagement() {
     handleChangeLimit,
     handleChangeSearch,
   } = useDataTable();
+
+  const profile = useAuthStore((state) => state.profile);
 
   const {
     data: orders,
@@ -185,7 +188,7 @@ export default function OrderManagement() {
         </div>,
         <DropdownAction
           menu={
-            order.status === "reserved"
+            order.status === "reserved" && profile.role !== "kitchen"
               ? reservedActionList.map((item) => ({
                   label: item.label,
                   action: () =>
@@ -223,12 +226,14 @@ export default function OrderManagement() {
             placeholder="search..."
             onChange={(e) => handleChangeSearch(e.target.value)}
           />
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline">Create</Button>
-            </DialogTrigger>
-            <DialogCreateOrder tables={tables} refetch={refetch} />
-          </Dialog>
+          {profile.role !== "kitchen" && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">Create</Button>
+              </DialogTrigger>
+              <DialogCreateOrder tables={tables} refetch={refetch} />
+            </Dialog>
+          )}
         </div>
       </div>
       <DataTable

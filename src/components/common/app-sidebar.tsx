@@ -31,12 +31,12 @@ import {
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { signOut } from "@/actions/auth-action";
-import { userAuthStore } from "@/stores/auth-store";
+import { useAuthStore } from "@/stores/auth-store";
 
 export default function AppSidebar() {
   const { isMobile } = useSidebar();
   const pathname = usePathname();
-  const profile = userAuthStore((state) => state.profile);
+  const profile = useAuthStore((state) => state.profile);
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
