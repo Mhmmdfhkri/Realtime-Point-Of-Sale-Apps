@@ -23,25 +23,25 @@ export default function Summary({
     tables: { name: string }[];
     status: string;
   };
-  orderMenu: { menus: Menu; quantity: number; status: string }[] | null | undefined;
+  orderMenu:
+    | { menus: Menu; quantity: number; status: string }[]
+    | null
+    | undefined;
   id: string;
 }) {
   const { grandTotal, totalPrice, tax, service } = usePricing(orderMenu);
 
-
-  const profile = useAuthStore((state) => state.profile)
+  const profile = useAuthStore((state) => state.profile);
 
   const isAllServed = useMemo(() => {
     return orderMenu?.every((item) => item.status === "served");
   }, [orderMenu]);
 
-
   const [
     generatePaymentState,
     generatePaymentAction,
-    isPendingGeneratePayment
+    isPendingGeneratePayment,
   ] = useActionState(generatePayment, INITIAL_STATE_GENERATE_PAYMENT);
-
 
   const handleGeneratePayment = () => {
     const formData = new FormData();
@@ -49,24 +49,21 @@ export default function Summary({
     formData.append("gross_amount", grandTotal.toString());
     formData.append("customer_name", order?.customer_name || "");
     startTransition(() => {
-      generatePaymentAction(formData)
-    })
+      generatePaymentAction(formData);
+    });
   };
 
+  useEffect(() => {
+    if (generatePaymentState?.status === "error") {
+      toast.error("Generate Payment Failed", {
+        description: generatePaymentState.errors?._form?.[0],
+      });
+    }
 
-
-    useEffect(() => {
-      if (generatePaymentState?.status === "error") {
-        toast.error("Generate Payment Failed", {
-          description: generatePaymentState.errors?._form?.[0],
-        });
-      }
-  
-      if (generatePaymentState?.status === "success") {
-        window.snap.pay(generatePaymentState.data.payment_token);
-      }
-    }, [generatePaymentState]);
-
+    if (generatePaymentState?.status === "success") {
+      window.snap.pay(generatePaymentState.data.payment_token);
+    }
+  }, [generatePaymentState]);
 
   return (
     <Card className="w-full shadow-sm">
@@ -93,50 +90,40 @@ export default function Summary({
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Order Summay</h3>
           <div className="flex justify-between items-center">
-            <p className="text-sm">
-                Subtotal
-            </p>
-            <p className="text-sm">
-                {convertIDR(totalPrice)}
-            </p>
+            <p className="text-sm">Subtotal</p>
+            <p className="text-sm">{convertIDR(totalPrice)}</p>
           </div>
 
           <div className="flex justify-between items-center">
-            <p className="text-sm">
-                Tax (12%)
-            </p>
-            <p className="text-sm">
-                {convertIDR(tax)}
-            </p>
+            <p className="text-sm">Tax (12%)</p>
+            <p className="text-sm">{convertIDR(tax)}</p>
           </div>
 
           <div className="flex justify-between items-center">
-            <p className="text-sm">
-                Service (5%)
-            </p>
-            <p className="text-sm">
-                {convertIDR(service)}
-            </p>
+            <p className="text-sm">Service (5%)</p>
+            <p className="text-sm">{convertIDR(service)}</p>
           </div>
-        <Separator />
+          <Separator />
           <div className="flex justify-between items-center">
-            <p className="text-lg font-semibold">
-                Total
-            </p>
-            <p className="text-lg font-semibold">
-                {convertIDR(grandTotal)}
-            </p>
+            <p className="text-lg font-semibold">Total</p>
+            <p className="text-lg font-semibold">{convertIDR(grandTotal)}</p>
           </div>
           {order?.status === "process" && profile.role !== "kitchen" && (
-            <Button 
-            type="submit"
-            onClick={handleGeneratePayment}
-            disabled={!isAllServed || isPendingGeneratePayment}
-            className="w-full font-semibold bg-teal-500 hover:bg-teal-600 text-white cursor-pointer">
-
+            <Button
+              type="submit"
+              onClick={handleGeneratePayment}
+              disabled={
+                !isAllServed ||
+                isPendingGeneratePayment ||
+                orderMenu?.length === 0
+              }
+              className="w-full font-semibold bg-teal-500 hover:bg-teal-600 text-white cursor-pointer"
+            >
               {isPendingGeneratePayment ? (
-                <Loader2 className="animate-spin"/>
-              ): "Pay"}
+                <Loader2 className="animate-spin" />
+              ) : (
+                "Pay"
+              )}
             </Button>
           )}
         </div>
