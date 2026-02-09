@@ -1,15 +1,15 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import useDebounce from '@/hooks/use-debounce';
-import { convertIDR } from '@/lib/utils';
-import { Cart } from '@/types/order';
-import { Menu } from '@/validations/menu-validation';
-import { Loader2 } from 'lucide-react';
-import Image from 'next/image';
-import { Dispatch, SetStateAction } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import useDebounce from "@/hooks/use-debounce";
+import { convertIDR } from "@/lib/utils";
+import { Cart } from "@/types/order";
+import { Menu } from "@/validations/menu-validation";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
 
 export default function CartSection({
   order,
@@ -29,7 +29,7 @@ export default function CartSection({
     | null;
   carts: Cart[];
   setCarts: Dispatch<SetStateAction<Cart[]>>;
-  onAddToCart: (item: Menu, type: 'decrement' | 'increment') => void;
+  onAddToCart: (item: Menu, type: "decrement" | "increment") => void;
   isLoading: boolean;
   onOrder: () => void;
 }) {
@@ -53,7 +53,10 @@ export default function CartSection({
             <div className="space-y-2">
               <Label>Table</Label>
               <Input
-                value={(order?.tables as unknown as { name: string })?.name}
+                value={
+                  (order?.tables as unknown as { name: string })?.name ||
+                  "Takeaway"
+                }
                 disabled
               />
             </div>
@@ -98,7 +101,7 @@ export default function CartSection({
                     <Button
                       className="font-semibold cursor-pointer"
                       variant="outline"
-                      onClick={() => onAddToCart(item.menu!, 'decrement')}
+                      onClick={() => onAddToCart(item.menu!, "decrement")}
                     >
                       -
                     </Button>
@@ -106,7 +109,7 @@ export default function CartSection({
                     <Button
                       className="font-semibold cursor-pointer"
                       variant="outline"
-                      onClick={() => onAddToCart(item.menu!, 'increment')}
+                      onClick={() => onAddToCart(item.menu!, "increment")}
                     >
                       +
                     </Button>
@@ -121,7 +124,7 @@ export default function CartSection({
             onClick={() => onOrder()}
             className="w-full font-semibold bg-teal-500 hover:bg-teal-600 cursor-pointer text-white"
           >
-            {isLoading ? <Loader2 className="animate-spin" /> : 'Order'}
+            {isLoading ? <Loader2 className="animate-spin" /> : "Order"}
           </Button>
         </div>
       </CardContent>
