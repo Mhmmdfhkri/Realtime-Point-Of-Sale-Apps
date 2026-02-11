@@ -148,7 +148,7 @@ export default function DetailOrder({ id }: { id: string }) {
             </span>
           </div>
         </div>,
-        <div>{convertIDR(item.menus.price * item.quantity)}</div>,
+        <div>{convertIDR(item.nominal)}</div>,
         <div
           className={cn("px-2 py-1 rounded-full text-white w-fit capitalize", {
             "bg-gray-500": item.status === "pending",
@@ -233,7 +233,7 @@ export default function DetailOrder({ id }: { id: string }) {
           />
         </div>
 
-        <div className="lg:w-1\3">
+        <div className="lg:w-1/3">
           {order && (
             <Summary order={order} orderMenu={orderMenu?.data} id={id} />
           )}
