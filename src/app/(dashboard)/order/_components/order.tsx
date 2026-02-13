@@ -17,7 +17,6 @@ import {
 } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Table } from "@/validations/table-validation";
 import { HEADER_TABLE_ORDER } from "@/constants/order-constant";
 import { updateReservation } from "../actions";
 import { INITIAL_STATE_ACTION } from "@/constants/general-constant";
@@ -97,6 +96,30 @@ export default function OrderManagement() {
     },
   });
 
+  const { data: activeOrders, refetch: refetchActiveOrders } = useQuery({
+    queryKey: ["active-orders"],
+    queryFn: async () => {
+      const query = supabase
+        .from("orders")
+        .select(
+          `
+            id, order_id, customer_name, status, payment_token, tables (name, id)
+            `,
+        )
+        .in("status", ["process", "reserved"])
+        .order("created_at");
+
+      const result = await query;
+
+      if (result.error)
+        toast.error("Get Order data Failed", {
+          description: result.error.message,
+        });
+
+      return result.data;
+    },
+  });
+
   useEffect(() => {
     const channel = supabase
       .channel("change-order")
@@ -110,6 +133,7 @@ export default function OrderManagement() {
         () => {
           refetchOrders();
           refetchTables();
+          refetchActiveOrders();
         },
       )
       .subscribe();
@@ -158,7 +182,6 @@ export default function OrderManagement() {
     if (reservedState?.status === "success") {
       toast.success("Update Reservation Success");
       refetchOrders();
-      refetchTables();
     }
   }, [reservedState]);
 
@@ -306,7 +329,7 @@ export default function OrderManagement() {
         </TabsContent>
 
         <TabsContent value="map">
-          <TableMap tables={tables || []} />
+          <TableMap tables={tables || []} activeOrders ={activeOrders || []} />
         </TabsContent>
       </Tabs>
     </div>
