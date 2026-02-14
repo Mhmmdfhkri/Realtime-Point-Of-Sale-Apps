@@ -267,7 +267,7 @@ export default function OrderManagement() {
           <h1 className="text-2xl font-bold">Order Management</h1>
           <TabsList>
             <TabsTrigger value="list">Order List </TabsTrigger>
-            <TabsTrigger value="map">Table Map </TabsTrigger>
+            <TabsTrigger value="map" >Table Map </TabsTrigger>
           </TabsList>
         </div>
 
@@ -327,7 +327,7 @@ export default function OrderManagement() {
           />
         </TabsContent>
 
-        <TabsContent value="map">
+        <TabsContent value="map" >
           <TableMap
             tables={tables || []}
             activeOrders={activeOrders || []}
